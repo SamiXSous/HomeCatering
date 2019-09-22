@@ -1,0 +1,55 @@
+.home {
+    .caterings {
+        cursor: pointer;
+
+        .card-body {
+            padding: 0.5rem !important;
+
+
+            .logo {
+                padding: 0;
+                border-right: 1px solid #ebebeb;
+
+                img {
+                    width: 100%;
+                    max-height: 80px;
+                    height: auto;
+                }
+            }
+
+            .info {
+                .name {
+                    font-weight: bolder;
+                }
+
+                .description {
+                    font-size: 0.8em !important;
+                }
+
+                .graphics {
+                    position: absolute;
+                    bottom: 0;
+
+                    .row {
+                        margin: 0 !important;
+                    }
+
+                    .graphic {
+                        i {
+                            font-size: 1em;
+                        }
+
+                        a {
+                            font-size: 0.8em;
+                            margin-right: 20px;
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+
+    }
+}
