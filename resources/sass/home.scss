@@ -1,6 +1,6 @@
 .home {
     .caterings {
-        cursor: pointer;
+        // cursor: pointer;
 
         .card-body {
             padding: 0.5rem !important;
@@ -18,6 +18,15 @@
             }
 
             .info {
+                button {
+                    font-size: 8pt;
+                    margin-top: 1px;
+                    margin-right: 15px;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                }
+
                 .name {
                     font-weight: bolder;
                 }

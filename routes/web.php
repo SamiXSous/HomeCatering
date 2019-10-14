@@ -27,12 +27,24 @@ Auth::routes(['verify' => true]);
 //     return (new App\Notifications\VerifyCatering());
 // });
 
+
+// Admin
+// Get All Users
 Route::get('/admin/AllUsers', 'AdminController@index')->middleware('admin')->name('admin.getAllUsers');
 
+// Edit Users
 Route::get('/admin/editUser/{id}', 'AdminController@editUser')->middleware('admin')->name('editUser');
-
 Route::post('/admin/editUser/{id}', 'AdminController@updateUser')->middleware('admin')->name('updateUser');
 
-Route::get('/catering/edit', 'CateringController@editCatering')->middleware('seller')->name('editCatering');
 
-Route::post('/catering/edit', 'CateringController@updateCatering')->middleware('seller')->name('updateCatering');
+
+
+// Seller
+
+// My Catering
+Route::get('/mycatering/', 'CateringController@cateringList')->middleware('seller')->name('MyCatering');
+// Route::post('/catering/edit/{id}', 'CateringController@updateCatering')->middleware('seller')->name('updateCatering');
+
+// Edit Catering
+Route::get('/catering/edit/{id}', 'CateringController@editCatering')->middleware('seller')->name('editCatering');
+Route::post('/catering/edit/{id}', 'CateringController@updateCatering')->middleware('seller')->name('updateCatering');

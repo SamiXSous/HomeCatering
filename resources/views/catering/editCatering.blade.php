@@ -41,7 +41,11 @@
                             <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Active') }}</label>
 
                             <div class="col-md-6">
-                            <input id="active" name="active" type="checkbox" value="{{$catering->active}}">
+                            @if ($catering->active)
+                                <input id="active" name="active" type="checkbox" checked>
+                            @else
+                                <input id="active" name="active" type="checkbox" >
+                            @endif
                             </div>
                         </div>
 

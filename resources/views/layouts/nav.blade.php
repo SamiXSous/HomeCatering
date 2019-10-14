@@ -38,6 +38,11 @@
                                     {{ __('Home') }}
                                 </a>
                                 @endif
+                                @if (Auth::user()->role == 2)
+                                    <a class="dropdown-item" href="{{ route('MyCatering') }}">
+                                    {{ __('My Catering') }}
+                                </a>
+                                @endif
                                 @if (Auth::user()->role == 3)
                                 
                                 <a class="dropdown-item" href="{{ route('admin.getAllUsers') }}">
