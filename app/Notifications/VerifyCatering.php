@@ -16,9 +16,10 @@ class VerifyCatering extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($catering)
     {
         //
+        $this->catering = $catering;
     }
 
     /**
@@ -40,10 +41,11 @@ class VerifyCatering extends Notification
      */
     public function toMail($notifiable)
     {
+        $url = url('/catering/edit/' . $this->catering->id);
         return (new MailMessage)
             ->line('You have been selected to open a storefront')
             ->subject('Den Kushina: Verify Storefront')
-            ->action('Click to verify new Storefront', url('/catering/edit'))
+            ->action('Click to verify new Storefront', $url)
             ->line('We thank you for using our application and we send a lot of reservations your way!');
     }
 

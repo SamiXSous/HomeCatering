@@ -1,0 +1,30 @@
+.addMenu {
+    .hiddenForm {
+        display: none;
+
+    }
+
+    h3 {
+        margin-top: 15px;
+    }
+
+    .card {
+        a.btn-primary {
+            color: white;
+        }
+
+        button {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        .table-hover>tbody>tr.no-hover:hover {
+            background-color: #ffffff;
+        }
+    }
+
+    .myProducts {
+        padding-bottom: 15px;
+    }
+}

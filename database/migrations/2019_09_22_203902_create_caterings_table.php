@@ -14,10 +14,11 @@ class CreateCateringsTable extends Migration
     public function up()
     {
         Schema::create('caterings', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name')->default('Name');
             $table->unsignedBigInteger('adminId');
             $table->boolean('active')->default(false);
+            $table->mediumText('image')->nullable();
             $table->string('description')->default('Description');
             $table->foreign('adminId')->references('id')->on('users');
             $table->timestamps();

@@ -23,7 +23,7 @@ class CheckSeller
         $user = User::findOrFail($id);
         $admin = Role::where('name', '=', 'Seller')->get();
 
-        if ($user->role >= $admin[0]->id) {
+        if ($user->role == $admin[0]->id) {
             return $next($request);
         }
 

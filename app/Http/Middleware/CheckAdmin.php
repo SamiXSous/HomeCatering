@@ -27,6 +27,10 @@ class CheckAdmin
             return $next($request);
         }
 
+        if ($id) {
+            return redirect('');
+        }
+
         return redirect('home');
     }
 }

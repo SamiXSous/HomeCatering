@@ -17,7 +17,11 @@
 
                     <div class="row">
                         <div class="col-md-2 logo">
-                            <img src="https://static.thuisbezorgd.nl/images/restaurants/nl/NNP11OQ/logo_465x320.png" class="card-img-top">
+                            @if ($catering->image == null)
+                                <img src="https://static.thuisbezorgd.nl/images/restaurants/nl/O713/logo_465x320.png" class="card-img-top">
+                            @else
+                                <img src="uploads/catering/{{$catering->image}}" class="card-img-top">
+                            @endif
                         </div>
 
                         <div class="col-md-10 info">
@@ -25,6 +29,7 @@
                                 {{$catering->name}}
                             </div>
                             <button onclick="window.location='/catering/edit/{{$catering->id}}'" >Edit</button>
+                            <button class="AddMenu" onclick="window.location='/mycatering/{{$catering->id}}/menus'" >Add Menu</button>
                             <div class="description">
                                 {{$catering->description}}
                             </div>

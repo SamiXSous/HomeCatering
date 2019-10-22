@@ -24,6 +24,10 @@
   right: 0;
 }
 
+.home .caterings .card-body .info .AddMenu {
+  top: unset;
+}
+
 .home .caterings .card-body .info .name {
   font-weight: bolder;
 }
@@ -48,6 +52,38 @@
 .home .caterings .card-body .info .graphics .graphic a {
   font-size: 0.8em;
   margin-right: 20px;
+}
+
+.addMenu .hiddenForm {
+  display: none;
+}
+
+.addMenu h3 {
+  margin-top: 15px;
+}
+
+.addMenu .card a.btn-primary {
+  color: white;
+}
+
+.addMenu .card button {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.addMenu .card .table-hover > tbody > tr.no-hover:hover {
+  background-color: #ffffff;
+}
+
+.addMenu .myProducts {
+  padding-bottom: 15px;
+}
+
+.addProduct .card button {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
 }
 
 /*!

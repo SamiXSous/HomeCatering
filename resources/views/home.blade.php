@@ -12,7 +12,8 @@
             </div>
         </div>
         <div class="col-md-9 caterings">
-            <div class="card">
+            @foreach ($caterings as $catering)
+                <div class="card">
 
                 <div class="card-body">
                     @if (session('status'))
@@ -20,19 +21,26 @@
                         {{ session('status') }}
                     </div>
                     @endif
-
+                    {{-- @dump($catering) --}}
                     <div class="row">
                         <div class="col-md-2 logo">
-                            <img src="https://static.thuisbezorgd.nl/images/restaurants/nl/NNP11OQ/logo_465x320.png" class="card-img-top">
+                            @if ($catering->image == null)
+                                <img src="https://static.thuisbezorgd.nl/images/restaurants/nl/O713/logo_465x320.png" class="card-img-top">
+                            @else
+                                <img src="uploads/catering/{{$catering->image}}" class="card-img-top">
+                            @endif
+                        
                         </div>
 
                         <div class="col-md-10 info">
                             <div class="name">
-                                Real Sonny's Kitchen
+                                {{-- Real Sonny's Kitchen --}}
+                                {{$catering->name}}
                             </div>
 
                             <div class="description">
-                                A Real Antillean Chef
+                                {{-- A Real Antillean Chef --}}
+                                {{$catering->description}}
                             </div>
 
                             <div class="graphics">
@@ -59,6 +67,8 @@
 
                 </div>
             </div>
+            @endforeach
+
         </div>
     </div>
 </div>

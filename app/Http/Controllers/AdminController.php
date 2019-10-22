@@ -44,7 +44,9 @@ class AdminController extends Controller
         }
         if ($request->input('role') == 2) {
             Catering::firstOrCreate(['adminId' => $id]);
-            User::find($id)->notify(new VerifyCatering);
+            $catering = Catering::where(['adminId' => $id])->first();
+
+            User::find($id)->notify(new VerifyCatering($catering));
         }
         // $roles = Role::all();
         // $affected = DB::table('users')
