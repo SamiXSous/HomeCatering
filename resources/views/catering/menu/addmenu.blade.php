@@ -3,6 +3,8 @@
 @section('content')
 <div class="container addMenu">
 
+    {{-- @dump($catering) --}}
+    <a href="{{ url()->previous() }}" class="btn btn-primary back-btn">Back</a>
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
@@ -68,13 +70,14 @@
                             @endif
 
                         </div>
-                        <button href="#" class="btn btn-primary">Save</button>
+                        <button href="#" class="btn btn-primary btm-btn">Save</button>
                     </form>
 
                 </div>
             </div>
         </div>
         <div class="hiddenForm" @if ($menu) style="display: inherit" @endif>
+            @if ($menu)
             <h3>{{$menuDate->DayOfTheWeek}}'s Menu </h3>
             <div class="card">
                 <table class="table table-hover">
@@ -86,31 +89,36 @@
                         <th>Edit</th>
                         <th>Remove</th>
                         {{-- <th>Role</th>
-                        <th></th> --}}
+                                    <th></th> --}}
                     </thead>
                     <tbody>
-                        {{-- @foreach($users as $user) --}}
+                        @foreach($productsMenu as $productMenu)
+                        {{-- @dump($productMenu, $menu) --}}
+                        @if ($productMenu->menuId === $menu->id)
                         <tr>
-                            {{-- <td>{{$user->name}} </td>
-                            <td>{{$user->email}} </td>
-                            <td>{{date_format($user->created_at, 'd-M-Y')}} </td> --}}
-                            {{-- @if ($user->role == 1) --}}
-                            <td>Buyer </td>
-                            {{-- @endif
-                            @if ($user->role == 2) --}}
-                            <td>Seller </td>
-                            {{-- @endif
-                            @if ($user->role == 3) --}}
-                            <td>Admin </td>
-                            {{-- @endif --}}
-
-
-                            {{-- <td><a href="{{ route('editUser', ['id' => $user->id]) }}"> Edit</a> </td> --}}
+                            <td>{{$productMenu->name}}</td>
+                            <td>{{$productMenu->description}}</td>
+                            <td>{{$productMenu->image}}</td>
+                            <td>{{$productMenu->price}}</td>
+                            <td style="padding: 5px"><a class="btn btn-primary">Edit</a> </td>
+                            <td style="padding: 5px">
+                                <form
+                                    action="{{ route('removeProductFromMenu', ['cateringId' => $catering->id, 'menuId' => $menu->id, 'productId' => $productMenu->productId] ) }}"
+                                    method="post">
+                                    @csrf
+                                    <input class="btn btn-danger addProduct" type="submit" name="removeProductFromMenu"
+                                        value="Del">
+                                </form>
+                            </td>
                         </tr>
-                        {{-- @endforeach --}}
+
+                        @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>
+
+
             <h3>My Products </h3>
             <div class="card myProducts">
                 <table class="table table-hover">
@@ -126,6 +134,7 @@
                     </thead>
                     <tbody>
                         {{-- @dump($products) --}}
+                        @if ($products)
                         @foreach($products as $product)
                         <tr>
                             {{-- <td>{{$user->name}} </td>
@@ -134,21 +143,24 @@
                             {{-- @if ($user->role == 1) --}}
                             <td>{{$product->name }}</td>
                             {{-- @endif
-                            @if ($user->role == 2) --}}
+                                                        @if ($user->role == 2) --}}
                             <td>{{$product->description}}</td>
                             {{-- @endif
-                            @if ($user->role == 3) --}}
+                                                        @if ($user->role == 3) --}}
                             <td>{{$product->image}} </td>
                             {{-- @endif --}}
                             <td>{{$product->price}}</td>
                             <td style="padding: 5px"><a class="btn btn-primary">Edit</a> </td>
-                            <td style="padding: 5px"><a class="btn btn-primary" style="margin-left: 16px;">Menu</a>
+                            <td style="padding: 5px"><a
+                                    onclick="window.location='/mycatering/{{$catering->id}}/menu/{{$menu->id}}/product/{{$product->id}}/menuDateId/{{$menuDate->id}}'"
+                                    class="btn btn-primary" style="margin-left: 16px;">Add</a>
                             </td>
 
 
                             {{-- <td><a href="{{ route('editUser', ['id' => $user->id]) }}"> Edit</a> </td> --}}
                         </tr>
                         @endforeach
+                        @endif
                         <tr class="no-hover">
                             {{-- <td>{{$user->name}} </td>
                             <td>{{$user->email}} </td>
@@ -170,7 +182,7 @@
 
                             </td>
                             <td>
-                                <button class="btn btn-primary addProduct"
+                                <button class="btn btn-primary btm-btn addProduct"
                                     onclick="window.location='/mycatering/{{$catering->id}}/product'">Add
                                     Product</button>
                             </td>
@@ -189,6 +201,7 @@
                 </table>
             </div>
         </div>
+        @endif
     </div>
 </div>
 @endsection

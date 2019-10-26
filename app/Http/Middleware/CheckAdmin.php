@@ -27,7 +27,7 @@ class CheckAdmin
             return $next($request);
         }
 
-        if ($id) {
+        if (!$id) {
             return redirect('');
         }
 

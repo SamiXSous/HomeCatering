@@ -10,6 +10,7 @@ use App\Catering;
 use App\MenuDate;
 use App\Menu;
 use App\Product;
+use App\ProductMenu;
 
 class CateringController extends Controller
 {
@@ -49,21 +50,29 @@ class CateringController extends Controller
     public function addMenu(Request $request)
     {
         $id = Auth::id();
-        $menuDateId = $request->route('menuId');
+        $menuDateId = $request->route('menuDateId');
         $cateringId = $request->route('cateringId');
         $catering = Catering::find($cateringId);
         $menuDate = MenuDate::find($menuDateId);
         $menu = Menu::where('DayOfTheWeekId', $menuDateId)->where('CateringId', $cateringId)->first();
         // var_dump($menu);
         $products = Product::where('cateringId', $cateringId)->get();
+        $productsMenu = Product::join('product_menus', 'products.id', '=', 'product_menus.productId')->join('menus', 'product_menus.menuId', '=', 'menus.id')->get();
+        // var_dump($productsMenu[0]);
 
-        return view('catering.menu.addMenu', compact('catering', 'menuDate', 'menu', 'products'));
+        return view('catering.menu.addMenu', compact('catering', 'menuDate', 'menu', 'products', 'productsMenu'));
+    }
+
+    public function removeProductFromMenu(Request $request)
+    {
+        ProductMenu::where(['menuId' => $request->route('menuId'), 'productId' => $request->route('productId')])->delete();
+        return back();
     }
 
     public function addProducts(Request $request)
     {
         $cateringId = $request->route('cateringId');
-
+        $products = Product::where('cateringId', $cateringId)->get();
 
         return view('catering.product.addProduct', compact('cateringId', 'products'));
     }
@@ -71,32 +80,46 @@ class CateringController extends Controller
     public function addProduct(Request $request)
     {
         $id = Auth::id();
-        $catering = Catering::where('adminId', $id)->first();
-
-        if ($request->file('image') != null) {
-            $file = $request->file('image');
-            var_dump($file);
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . $catering->id . '.' . $extension;
-            $file->move('uploads/catering/', $filename);
-        } else {
-            $filename = null;
-        }
-
-        Product::updateOrCreate(
-            ['name' => $request->input('name')],
-            [
-                'description' => $request->input('description'),
-                'price' => $request->input('price'),
-                'image' => $filename,
-                'cateringId' => $request->input('cateringId')
-            ]
-        );
-
-
-
+        $menuDateId = $request->route('menuId');
         $cateringId = $request->route('cateringId');
-        return view('catering.product.addProduct', compact('cateringId'));
+        $catering = Catering::find($cateringId);
+        $menuDate = MenuDate::find($menuDateId);
+        $menu = Menu::where('DayOfTheWeekId', $menuDateId)->where('CateringId', $cateringId)->first();
+        // var_dump($menu);
+
+
+        if ($request->input()) {
+            if ($request->file('image') != null) {
+                $file = $request->file('image');
+                var_dump($file);
+                $extension = $file->getClientOriginalExtension();
+                $filename = time() . $catering->id . '.' . $extension;
+                $file->move('uploads/catering/', $filename);
+            } else {
+                $filename = null;
+            }
+
+            Product::updateOrCreate(
+                ['name' => $request->input('name')],
+                [
+                    'description' => $request->input('description'),
+                    'price' => $request->input('price'),
+                    'image' => $filename,
+                    'cateringId' => $request->input('cateringId')
+                ]
+            );
+        }
+        $products = Product::where('cateringId', $cateringId)->get();
+
+        return view('catering.menu.addMenu', compact('catering', 'menuDate', 'menu', 'products'));
+    }
+
+    public function addProductToMenu(Request $request)
+    {
+        var_dump($request->route('productId'));
+        ProductMenu::firstOrCreate(['menuId' => $request->route('menuId'), 'productId' => $request->route('productId')]);
+
+        return back();
     }
 
 
@@ -125,9 +148,10 @@ class CateringController extends Controller
         $catering = Catering::find($cateringId);
         $menuDate = MenuDate::find($menuDateId);
         $menu = Menu::where('DayOfTheWeekId', $menuDateId)->where('CateringId', $cateringId)->first();
+        $products = Product::where('cateringId', $cateringId)->get();
         // var_dump($menu);
 
-        return view('catering.menu.addMenu', compact('catering', 'menuDate', 'menu'));
+        return view('catering.menu.addMenu', compact('catering', 'menuDate', 'menu', 'products'));
     }
 
     public function updateCatering(Request $request)

@@ -30,11 +30,11 @@ Auth::routes(['verify' => true]);
 
 // Admin
 // Get All Users
-Route::get('/admin/AllUsers', 'AdminController@index')->middleware('admin')->name('admin.getAllUsers');
+Route::get('/admin/AllUsers', 'AdminController@index')->middleware('auth')->middleware('admin')->name('admin.getAllUsers');
 
 // Edit Users
-Route::get('/admin/editUser/{id}', 'AdminController@editUser')->middleware('admin')->name('editUser');
-Route::post('/admin/editUser/{id}', 'AdminController@updateUser')->middleware('admin')->name('updateUser');
+Route::get('/admin/editUser/{id}', 'AdminController@editUser')->middleware('auth')->middleware('admin')->name('editUser');
+Route::post('/admin/editUser/{id}', 'AdminController@updateUser')->middleware('auth')->middleware('admin')->name('updateUser');
 
 
 
@@ -42,19 +42,23 @@ Route::post('/admin/editUser/{id}', 'AdminController@updateUser')->middleware('a
 // Seller
 
 // My Catering
-Route::get('/mycatering', 'CateringController@cateringList')->middleware('seller')->name('MyCatering');
+Route::get('/mycatering', 'CateringController@cateringList')->middleware('auth')->middleware('seller')->name('MyCatering');
 
 
 // Edit Catering
-Route::get('/catering/edit/{id}', 'CateringController@editCatering')->middleware('seller')->name('editCatering');
-Route::post('/catering/edit/{id}', 'CateringController@updateCatering')->middleware('seller')->name('updateCatering');
+Route::get('/catering/edit/{id}', 'CateringController@editCatering')->middleware('auth')->middleware('seller')->name('editCatering');
+Route::post('/catering/edit/{id}', 'CateringController@updateCatering')->middleware('auth')->middleware('seller')->name('updateCatering');
 
 // Menu
-Route::get('/mycatering/{id}/menus', 'CateringController@addMenus')->middleware('seller')->name('menus');
-Route::get('/mycatering/{cateringId}/menu/{menuId}', 'CateringController@addMenu')->middleware('seller')->name('menu');
+Route::get('/mycatering/{id}/menus', 'CateringController@addMenus')->middleware('auth')->middleware('seller')->name('menus');
+Route::get('/mycatering/{cateringId}/menu/{menuDateId}', 'CateringController@addMenu')->middleware('auth')->middleware('seller')->name('menu');
 
-Route::post('/mycatering/{cateringId}/menu/{menuId}', 'CateringController@openOrClosedMenu')->middleware('seller')->name('openOrClosedMenu');
+Route::post('/mycatering/{cateringId}/menu/{menuId}', 'CateringController@openOrClosedMenu')->middleware('auth')->middleware('seller')->name('openOrClosedMenu');
 
 // Product
-Route::get('/mycatering/{cateringId}/product/', 'CateringController@addProducts')->middleware('seller')->name('addProducts');
-Route::post('/mycatering/{cateringId}/product/', 'CateringController@addProduct')->middleware('seller')->name('addProduct');
+Route::get('/mycatering/{cateringId}/product/', 'CateringController@addProducts')->middleware('auth')->middleware('seller')->name('addProducts');
+Route::post('/mycatering/{cateringId}/product/', 'CateringController@addProduct')->middleware('auth')->middleware('seller')->name('addProduct');
+
+// Add Product To Menu
+Route::get('/mycatering/{cateringId}/menu/{menuId}/product/{productId}/menuDateId/{menuDateId}', 'CateringController@addProductToMenu')->middleware('auth')->middleware('seller')->name('addProductToMenu');
+Route::post('/mycatering/{cateringId}/menu/{menuId}/product/{productId}', 'CateringController@removeProductFromMenu')->middleware('auth')->middleware('seller')->name('removeProductFromMenu');
