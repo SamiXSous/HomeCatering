@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-9 caterings">
             @foreach ($caterings as $catering)
-                <div class="card">
+            <div class="card catering" onclick="window.location='/catering/{{$catering->id}}/menu/'">
 
                 <div class="card-body">
                     @if (session('status'))
@@ -25,11 +25,12 @@
                     <div class="row">
                         <div class="col-md-2 logo">
                             @if ($catering->image == null)
-                                <img src="https://static.thuisbezorgd.nl/images/restaurants/nl/O713/logo_465x320.png" class="card-img-top">
+                            <img src="https://static.thuisbezorgd.nl/images/restaurants/nl/O713/logo_465x320.png"
+                                class="card-img-top">
                             @else
-                                <img src="uploads/catering/{{$catering->image}}" class="card-img-top">
+                            <img src="uploads/catering/{{$catering->image}}" class="card-img-top">
                             @endif
-                        
+
                         </div>
 
                         <div class="col-md-10 info">
@@ -61,14 +62,9 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
                 </div>
             </div>
             @endforeach
-
         </div>
     </div>
 </div>

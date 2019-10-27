@@ -111,7 +111,7 @@ class CateringController extends Controller
         }
         $products = Product::where('cateringId', $cateringId)->get();
 
-        return view('catering.menu.addMenu', compact('catering', 'menuDate', 'menu', 'products'));
+        return back();
     }
 
     public function addProductToMenu(Request $request)
@@ -149,9 +149,10 @@ class CateringController extends Controller
         $menuDate = MenuDate::find($menuDateId);
         $menu = Menu::where('DayOfTheWeekId', $menuDateId)->where('CateringId', $cateringId)->first();
         $products = Product::where('cateringId', $cateringId)->get();
+        $productsMenu = Product::join('product_menus', 'products.id', '=', 'product_menus.productId')->join('menus', 'product_menus.menuId', '=', 'menus.id')->get();
         // var_dump($menu);
 
-        return view('catering.menu.addMenu', compact('catering', 'menuDate', 'menu', 'products'));
+        return view('catering.menu.addMenu', compact('catering', 'menuDate', 'menu', 'products', 'productsMenu'));
     }
 
     public function updateCatering(Request $request)

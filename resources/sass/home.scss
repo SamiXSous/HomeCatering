@@ -1,6 +1,18 @@
 .home {
     .caterings {
+
         // cursor: pointer;
+
+        .catering {
+            margin-bottom: 15px;
+
+
+
+        }
+
+        .card:hover {
+            cursor: pointer;
+        }
 
         .card-body {
             padding: 0.5rem !important;
