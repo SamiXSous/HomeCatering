@@ -3,6 +3,7 @@
 @section('content')
 <div class="container home">
     <div class="row justify-content-center">
+
         <div class="col-md-3">
             <div class="card">
 
@@ -12,6 +13,16 @@
             </div>
         </div>
         <div class="col-md-9 caterings">
+
+            <div class="input-group md-form form-sm form-2 pl-0">
+                <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Search Catering"
+                    aria-label="Search">
+                <div class="input-group-append">
+                    <span class="input-group-text lime lighten-2" id="basic-text1"><i class="fas fa-search text-grey"
+                            aria-hidden="true"></i></span>
+                </div>
+
+            </div>
             @foreach ($caterings as $catering)
             <div class="card catering" onclick="window.location='/catering/{{$catering->id}}/menu/'">
 

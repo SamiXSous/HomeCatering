@@ -1,4 +1,12 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Lato|Nunito&display=swap);@charset "UTF-8";
+
+.home .input-group {
+  margin-bottom: 15px;
+}
+
+.home .input-group .input-group-append:hover {
+  cursor: pointer;
+}
 
 .home .caterings .catering {
   margin-bottom: 15px;
@@ -90,10 +98,25 @@
 
 .dayOfTheWeekNav {
   margin-bottom: 1.5rem !important;
+  background-color: white;
 }
 
 .displayMenu .product {
   margin-bottom: 15px;
+}
+
+.displayMenu .product:hover {
+  cursor: pointer;
+}
+
+.displayMenu .description {
+  color: #666;
+}
+
+.displayMenu .price {
+  font-weight: 900;
+  font-family: "Lato", sans-serif;
+  font-size: 1.5em;
 }
 
 .back-btn {

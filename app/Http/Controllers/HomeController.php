@@ -48,6 +48,7 @@ class HomeController extends Controller
         $dayOfTheWeek = Carbon::now()->dayOfWeek;
         $weekday = $weekMap[$dayOfTheWeek];
         $cateringId = $request->route('id');
+        $catering = Catering::find($cateringId);
 
 
         $allProducts = Product::join('product_menus', 'products.id', '=', 'product_menus.productId')
@@ -66,7 +67,7 @@ class HomeController extends Controller
 
         // var_dump($weekday, $products);
 
-        return view('catering.menu.displayMenu', compact('products', 'menuDates', 'cateringId', 'dayOfTheWeek'));
+        return view('catering.menu.displayMenu', compact('products', 'menuDates', 'catering', 'dayOfTheWeek'));
     }
     public function cateringMenuDay(Request $request)
     {
@@ -74,6 +75,7 @@ class HomeController extends Controller
         $menuDates = MenuDate::all();
         $dayOfTheWeek = $request->route('dayOfTheWeekId');
         $cateringId = $request->route('id');
+        $catering = Catering::find($cateringId);
 
 
         $allProducts = Product::join('product_menus', 'products.id', '=', 'product_menus.productId')
@@ -91,6 +93,6 @@ class HomeController extends Controller
 
         // var_dump($weekdayId, $products);
 
-        return view('catering.menu.displayMenu', compact('products', 'menuDates', 'cateringId', 'dayOfTheWeek'));
+        return view('catering.menu.displayMenu', compact('products', 'menuDates', 'catering', 'dayOfTheWeek'));
     }
 }
