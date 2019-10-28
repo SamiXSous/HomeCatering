@@ -27,9 +27,25 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $caterings = Catering::where('active', true)->get();
+        $weekMap = [
+            0 => 'Sunday',
+            1 => 'Monday',
+            2 => 'Tuesday',
+            3 => 'Wednesday',
+            4 => 'Thursday',
+            5 => 'Friday',
+            6 => 'Saturday',
+        ];
+        $weekDay = Carbon::now()->dayOfWeek;
+        // $dayOfTheWeek = $weekMap[$weekDay];
 
-        return view('home', compact('caterings'));
+        $dayOfTheWeek = $weekDay+1;
+
+        $caterings = Catering::where('active', true)
+        // ->join('menus', 'caterings.id', '=', 'menus.CateringId')
+        ->get();
+
+        return view('home', compact('caterings', 'dayOfTheWeek'));
     }
 
     public function cateringMenu(Request $request)
@@ -45,10 +61,12 @@ class HomeController extends Controller
             5 => 'Friday',
             6 => 'Saturday',
         ];
-        $dayOfTheWeek = Carbon::now()->dayOfWeek;
-        $weekday = $weekMap[$dayOfTheWeek];
+        $weekDay = Carbon::now()->dayOfWeek;
+        // $dayOfTheWeek = $weekMap[$weekDay];
         $cateringId = $request->route('id');
         $catering = Catering::find($cateringId);
+
+        $dayOfTheWeek = $weekDay+1;
 
 
         $allProducts = Product::join('product_menus', 'products.id', '=', 'product_menus.productId')
@@ -58,12 +76,12 @@ class HomeController extends Controller
 
         $products = [];
         foreach ($allProducts as $item) {
-            if ($item->DayOfTheWeek === $weekday && $item->cateringId == $cateringId) {
+            if ($item->id === $dayOfTheWeek && $item->cateringId == $cateringId) {
                 array_push($products, $item);
             }
         }
 
-        $dayOfTheWeek =+1;
+        
 
         // var_dump($weekday, $products);
 
@@ -94,5 +112,18 @@ class HomeController extends Controller
         // var_dump($weekdayId, $products);
 
         return view('catering.menu.displayMenu', compact('products', 'menuDates', 'catering', 'dayOfTheWeek'));
+    }
+
+    public function searchCatering(Request $request)
+    {
+        // var_dump();
+        $search = $request->get('searchBar');
+        $caterings = Catering::where('active', true)
+        ->where('name', 'LIKE', '%'.$search.'%')
+        // ->join('menus', 'caterings.id', '=', 'menus.CateringId')
+        ->get();
+
+        return view('home', compact('caterings', 'search'));
+        
     }
 }

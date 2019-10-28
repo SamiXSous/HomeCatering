@@ -4,7 +4,7 @@
 <div class="container addMenu">
 
     {{-- @dump($catering) --}}
-    <a href="{{ url()->previous() }}" class="btn btn-primary back-btn">Back</a>
+    <a href="{{ route('menus', ['id' => $catering->id]) }}" class="btn btn-primary back-btn">Back</a>
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">

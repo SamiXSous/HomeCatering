@@ -4,8 +4,32 @@
   margin-bottom: 15px;
 }
 
+.home .input-group .searchBar {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.home .input-group .input-group-text {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
 .home .input-group .input-group-append:hover {
   cursor: pointer;
+}
+
+.home .input-group .input-group-append button {
+  padding: 0;
+}
+
+.home .input-group #basic-text1 {
+  margin-top: -1px;
+  margin-left: -1px;
+  height: 37px;
+}
+
+.home h4 {
+  margin-left: 5px;
 }
 
 .home .caterings .catering {

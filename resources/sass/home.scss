@@ -1,11 +1,36 @@
 .home {
-
     .input-group {
         margin-bottom: 15px;
+
+        .searchBar {
+            border-bottom-right-radius: 0px;
+            border-top-right-radius: 0px;
+        }
+
+        .input-group-text {
+            border-bottom-left-radius: 0px;
+            border-top-left-radius: 0px;
+        }
 
         .input-group-append:hover {
             cursor: pointer;
         }
+
+        .input-group-append {
+            button {
+                padding: 0;
+            }
+        }
+
+        #basic-text1 {
+            margin-top: -1px;
+            margin-left: -1px;
+            height: 37px;
+        }
+    }
+
+    h4 {
+        margin-left: 5px;
     }
 
 

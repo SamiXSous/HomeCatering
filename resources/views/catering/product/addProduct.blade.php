@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container addProduct">
-    <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+    <a href="{{ url()->previous() }}" class="btn btn-primary back-btn">Back</a>
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">

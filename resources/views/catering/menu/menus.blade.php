@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    <a href="{{ route('MyCatering') }}" class="btn btn-primary back-btn">Back</a>
     <div class="row">
         @foreach ($menuDates as $menuDate)
         <div class="col-sm">

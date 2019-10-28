@@ -19,6 +19,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
+Route::post('/home', 'HomeController@searchCatering')->middleware('verified')->name('search');
 
 Route::get('/catering/{id}/menu', 'HomeController@cateringMenu')->middleware('verified')->name('cateringMenu');
 Route::get('/catering/{id}/menu/{dayOfTheWeekId}', 'HomeController@cateringMenuDay')->middleware('verified')->name('cateringMenuDay');
