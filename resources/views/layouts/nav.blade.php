@@ -2,10 +2,12 @@
     <div class="container">
         @guest
         <a class="navbar-brand" href="{{ url('/') }}">
+            <img src="{{ asset('den-kushina.png') }}" alt="">
             {{ config('app.name', 'Den Kushina') }}
         </a>
         @else
         <a class="navbar-brand" href="{{ url('/home') }}">
+            <img src="{{ asset('den-kushina.png') }}" alt="">
             {{ config('app.name', 'Den Kushina') }}
         </a>
         @endguest
@@ -39,7 +41,8 @@
                         {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"
+                        style="margin-top: 8px;">
 
                         @if (Auth::user()->role >= 2)
                         <a class="dropdown-item" href="{{ route('home') }}">

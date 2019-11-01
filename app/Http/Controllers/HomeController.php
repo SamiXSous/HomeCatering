@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\Cart;
 use App\Catering;
 use App\Product;
 use App\MenuDate;
@@ -25,6 +29,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    
     public function index()
     {
         $weekMap = [
@@ -50,7 +55,7 @@ class HomeController extends Controller
 
     public function cateringMenu(Request $request)
     {
-
+        $userId = Auth::id();
         $menuDates = MenuDate::all();
         $weekMap = [
             0 => 'Sunday',
@@ -62,11 +67,18 @@ class HomeController extends Controller
             6 => 'Saturday',
         ];
         $weekDay = Carbon::now()->dayOfWeek;
-        // $dayOfTheWeek = $weekMap[$weekDay];
+        $dayOfTheWeek = $weekMap[$weekDay];
         $cateringId = $request->route('id');
         $catering = Catering::find($cateringId);
+        $cart = Cart::where('userId', $userId)
+        ->where('date', Carbon::today())
+        ->join('cart_products', 'carts.id', '=', 'cart_products.cartId')
+        ->join('products', 'cart_products.productId', '=', 'products.id')
+        ->get();
 
         $dayOfTheWeek = $weekDay+1;
+        
+        $todaysDate = Carbon::today('Europe/Amsterdam');
 
 
         $allProducts = Product::join('product_menus', 'products.id', '=', 'product_menus.productId')
@@ -81,24 +93,40 @@ class HomeController extends Controller
             }
         }
 
-        
+        $totalCart = 0;
 
-        // var_dump($weekday, $products);
+        // var_dump($cart);
 
-        return view('catering.menu.displayMenu', compact('products', 'menuDates', 'catering', 'dayOfTheWeek'));
+        return view('catering.menu.displayMenu', compact('products', 'menuDates', 'catering', 'dayOfTheWeek', 'todaysDate', 'cart', 'totalCart'));
     }
+
     public function cateringMenuDay(Request $request)
     {
-
+        $userId = Auth::id();
         $menuDates = MenuDate::all();
         $dayOfTheWeek = $request->route('dayOfTheWeekId');
         $cateringId = $request->route('id');
         $catering = Catering::find($cateringId);
 
+        
+        $weekDay = Carbon::now()->dayOfWeek+1;
+        $dateDifference = $dayOfTheWeek - $weekDay;
+        
+        $todaysDate = Carbon::today()->addDays($dateDifference);
+        if($dateDifference < 0){
+            $todaysDate = Carbon::today()->addDays($dateDifference)->addWeeks(1);
+        }
 
-        $allProducts = Product::join('product_menus', 'products.id', '=', 'product_menus.productId')
+        $allProducts = Product::
+            join('product_menus', 'products.id', '=', 'product_menus.productId')
             ->join('menus', 'product_menus.menuId', '=', 'menus.id')
             ->join('menu_dates', 'menus.DayOfTheWeekId', '=', 'menu_dates.id')
+            ->get();
+
+        $cart = Cart::where('userId', $userId)
+            ->where('date', $todaysDate)
+            ->join('cart_products', 'carts.id', '=', 'cart_products.cartId')
+            ->join('products', 'cart_products.productId', '=', 'products.id')
             ->get();
 
         $products = [];
@@ -109,9 +137,10 @@ class HomeController extends Controller
             }
         }
 
-        // var_dump($weekdayId, $products);
+        $totalCart = 0;
+        // var_dump($dateDifference);
 
-        return view('catering.menu.displayMenu', compact('products', 'menuDates', 'catering', 'dayOfTheWeek'));
+        return view('catering.menu.displayMenu', compact('products', 'menuDates', 'catering', 'dayOfTheWeek', 'todaysDate', 'cart', 'totalCart'));
     }
 
     public function searchCatering(Request $request)
@@ -120,6 +149,7 @@ class HomeController extends Controller
         $search = $request->get('searchBar');
         $caterings = Catering::where('active', true)
         ->where('name', 'LIKE', '%'.$search.'%')
+        ->orWhere('description', 'LIKE', '%'.$search.'%')
         // ->join('menus', 'caterings.id', '=', 'menus.CateringId')
         ->get();
 

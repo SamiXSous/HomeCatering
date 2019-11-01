@@ -7,7 +7,8 @@
         <div class="card">
             <div class="card-body">
                 <div class="container">
-                    <form action="{{ route('addProduct', ['cateringId' => $cateringId ]) }}" method="POST"
+                    <form autocomplete="off" action="{{ route('addProduct', ['cateringId' => $cateringId ]) }}"
+                        method="POST"
                         {{-- action="{{ route('openOrClosedMenu', ['cateringId' => $catering->id, 'menuId' => $menuDate->id ]) }}"
                         --}}>
                         @csrf

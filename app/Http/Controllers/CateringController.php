@@ -122,6 +122,10 @@ class CateringController extends Controller
         return back();
     }
 
+    public function activeOrInactiveCatering(Request $request){
+        var_dump($request);
+    }
+
 
 
     public function openOrClosedMenu(Request $request)
@@ -175,7 +179,8 @@ class CateringController extends Controller
             $filename = null;
         }
 
-        if ($request->input('active') == null) {
+
+        if ($request->input('activeCatering') == null) {
             $active = false;
         } else {
             $active = true;

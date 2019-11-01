@@ -11,6 +11,9 @@
 |
 */
 
+use App\Role;
+
+Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,8 +27,10 @@ Route::post('/home', 'HomeController@searchCatering')->middleware('verified')->n
 Route::get('/catering/{id}/menu', 'HomeController@cateringMenu')->middleware('verified')->name('cateringMenu');
 Route::get('/catering/{id}/menu/{dayOfTheWeekId}', 'HomeController@cateringMenuDay')->middleware('verified')->name('cateringMenuDay');
 
+Route::get('/catering/{cateringId}/cartProduct/{cartProductId}/date/{date}', 'CartController@addProductToCart')->middleware('verified')->name('addProductToCart');
 
-Auth::routes(['verify' => true]);
+
+
 
 // Route::get('/email', function () {
 //     $user = App\User::find(Auth::id());
@@ -59,6 +64,7 @@ Route::post('/mycatering/{cateringId}/menu/{menuId}', 'CateringController@openOr
 // Edit Catering
 Route::get('/catering/edit/{id}', 'CateringController@editCatering')->middleware('verified')->middleware('seller')->name('editCatering');
 Route::post('/catering/edit/{id}', 'CateringController@updateCatering')->middleware('verified')->middleware('seller')->name('updateCatering');
+Route::post('/catering/edit/{id}/activeOrInactive', 'CateringController@activeOrInactiveCatering')->middleware('verified')->middleware('seller')->name('activeOrInactiveCatering');
 
 
 // Product

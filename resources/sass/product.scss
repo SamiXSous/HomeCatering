@@ -26,23 +26,3 @@
 .noRightPadding {
     padding-right: 0px !important;
 }
-
-.cart {
-    margin-top: -1.5rem !important;
-    width: -webkit-calc(100% + 15px);
-    width: -moz-calc(100% + 15px);
-    width: calc(100% + 15px);
-
-    .card {
-        height: -webkit-calc(100vh - 55px);
-        height: -moz-calc(100vh - 55px);
-        height: calc(100vh - 55px);
-        width: calc(100% + 15px);
-
-        h3 {
-            text-align: center;
-            border-bottom: 1px solid rgb(222, 226, 230);
-            padding-bottom: 5px;
-        }
-    }
-}

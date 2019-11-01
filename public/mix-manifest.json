@@ -2,5 +2,6 @@
     "/js/addMenu.js": "/js/addMenu.js",
     "/js/addProduct.js": "/js/addProduct.js",
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/editCatering.js": "/js/editCatering.js"
 }

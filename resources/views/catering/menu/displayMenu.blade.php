@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row" style="width: 100%">
-    <div class="col-sm-9 noRightPadding">
+    <div class="col-sm-7 noRightPadding">
 
         <div class="col-sm-12" style="border-bottom: 1px solid #dee2e6;">
             <div class="container">
@@ -31,7 +31,8 @@
                 <div class="col-md-12 products">
                     @if ($products)
                     @foreach ($products as $product)
-                    <div class="card product">
+                    <div onclick="window.location='/catering/{{$catering->id}}/cartProduct/{{$product->productId}}/date/{{$todaysDate}}'"
+                        class="card product">
                         <div class="card-body">
                             <h3>{{$product->name}}</h3>
                             <div class="description">{{$product->description}}</div>
@@ -51,8 +52,8 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-3 noLeftPadding noRightPadding cart">
-        @include('catering.menu.cart')
+    <div class="col-sm-5 noLeftPadding noRightPadding cart">
+        @include('catering.menu.cart', compact('todaysDate', 'cart'))
     </div>
 </div>
 

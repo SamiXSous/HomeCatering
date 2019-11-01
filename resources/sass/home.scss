@@ -29,8 +29,12 @@
         }
     }
 
-    h4 {
+    .showingResults {
         margin-left: 5px;
+    }
+
+    .noResults {
+        text-align: center;
     }
 
 
@@ -77,6 +81,7 @@
 
                 .AddMenu {
                     top: unset;
+                    margin-top: 5px;
                 }
 
                 .name {
@@ -112,5 +117,28 @@
         }
 
 
+    }
+}
+
+.editCatering {
+    .custom-control.custom-switch {
+        padding-left: 0;
+    }
+
+    label.custom-control-label {
+        position: relative;
+        padding-right: 1.5rem;
+    }
+
+    label.custom-control-label::before {
+        top: 8px;
+        right: -45px;
+        left: auto;
+    }
+
+    label.custom-control-label::after {
+        top: 10px;
+        right: -31px;
+        left: auto;
     }
 }

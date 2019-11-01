@@ -9,13 +9,15 @@
 
                 <div class="card-body">
                     Filters
+                    <h4 style="text-align:center; margin-top:25px">Comming Soon</h4>
                 </div>
             </div>
         </div>
         <div class="col-md-9 caterings">
 
             <div class="input-group md-form form-sm form-2 pl-0">
-                <form action="{{ route('search') }}" method="POST" style="display: inherit; width: 100%;">
+                <form action="{{ route('search') }}" method="POST" style="display: inherit; width: 100%;"
+                    autocomplete="off">
                     @csrf
                     <input class="form-control my-0 py-1 lime-border searchBar" type="text"
                         placeholder="Search Catering" aria-label="Search" name="searchBar">
@@ -29,7 +31,10 @@
                 </form>
             </div>
             @if ($search ?? '')
-            <h4>Showing Results For "{{$search}}"</h4>
+            <h4 class="showingResults">Showing {{$caterings->count()}} Results For "{{$search}}"</h4>
+            @if ($caterings->count() == 0)
+            <h2 class="noResults">No Results Found</h2>
+            @endif
             @endif
             @foreach ($caterings as $catering)
             {{-- @dump($catering) --}}

@@ -16,9 +16,11 @@ class CreateCateringsTable extends Migration
         Schema::create('caterings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->default('Name');
-            $table->unsignedBigInteger('adminId');
+            $table->unsignedInteger('adminId');
             $table->boolean('active')->default(false);
             $table->mediumText('image')->nullable();
+            $table->string('adres')->nullable();
+            $table->string('tel')->nullable();
             $table->string('description')->default('Description');
             $table->foreign('adminId')->references('id')->on('users');
             $table->timestamps();
