@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Cart;
+use App\CartProducts;
 use App\Catering;
 use App\Product;
 use App\MenuDate;
@@ -73,6 +74,7 @@ class HomeController extends Controller
         $cart = Cart::where('userId', $userId)
         ->where('date', Carbon::today())
         ->join('cart_products', 'carts.id', '=', 'cart_products.cartId')
+        ->select('cart_products.id')
         ->join('products', 'cart_products.productId', '=', 'products.id')
         ->get();
 
@@ -123,10 +125,12 @@ class HomeController extends Controller
             ->join('menu_dates', 'menus.DayOfTheWeekId', '=', 'menu_dates.id')
             ->get();
 
-        $cart = Cart::where('userId', $userId)
-            ->where('date', $todaysDate)
-            ->join('cart_products', 'carts.id', '=', 'cart_products.cartId')
+        $cart = CartProducts::
+            join('carts', 'cart_products.cartId', '=', 'carts.id')
             ->join('products', 'cart_products.productId', '=', 'products.id')
+            ->where('userId', $userId)
+            ->where('date', $todaysDate)
+            ->select('products.*', 'carts.*', 'cart_products.*')
             ->get();
 
         $products = [];

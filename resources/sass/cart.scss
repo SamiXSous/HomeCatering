@@ -20,5 +20,23 @@
         h5 {
             text-align: center;
         }
+
+        .itemName {
+            margin-left: -25px;
+        }
+
+        .date {
+            margin: 15px 0;
+        }
+
+        .noItemsInCart {
+            text-align: center;
+            margin-top: 45%;
+
+            i {
+                font-size: 96px;
+                margin-bottom: 10px;
+            }
+        }
     }
 }

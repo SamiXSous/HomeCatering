@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row" style="width: 100%">
-    <div class="col-sm-7 noRightPadding">
+    <div class="col-sm-8 noRightPadding">
 
         <div class="col-sm-12" style="border-bottom: 1px solid #dee2e6;">
             <div class="container">
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-5 noLeftPadding noRightPadding cart">
+    <div class="col-sm-4 noLeftPadding noRightPadding cart">
         @include('catering.menu.cart', compact('todaysDate', 'cart'))
     </div>
 </div>

@@ -32,4 +32,37 @@ class CartController extends Controller
         return back();
     }
 
+    public function updateProductAmount(Request $request)
+    {
+        $input = $request->all();
+
+        $cartProductId = $request->input('cartProductId');
+        $cartProductAmount = $request->input('cartProductAmount');
+
+        // var_dump($input);
+        CartProducts::find($cartProductId)->update(['amount' => $cartProductAmount]);
+
+        return response()->json(['success'=> 'Al Went Well']);
+    }
+
+    public function removeProductFromCart(Request $request)
+    {
+        $userId = Auth::id();
+        $cartProductId = $request->input('cartProductId');
+        // $productId = $request->route('cartProductId');
+        // $date = $request->route('date');
+        var_dump($cartProductId);
+        
+
+        // $cart = Cart::firstOrCreate(['userId' => $userId, 'cateringId' => $cateringId] ,['date' => $date]);
+        // var_dump($productId);
+        CartProducts::find($cartProductId)->delete();
+        // CartProducts::where([
+        //     'cartId' => $cart->id,
+        //     'productId' => $productId,
+        //     'amount' => 1
+        // ]);
+        return back();
+    }
+
 }

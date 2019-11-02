@@ -93,10 +93,38 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// require('moment');
 window.onload = function () {
-  CheckOpenOrClosed(); // $('#opening').timepicker();
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  CheckOpenOrClosed();
+  changeProductAmountInCart();
 };
+
+function changeProductAmountInCart() {
+  var cartProductIds = $('.cartProductId');
+  $.each(cartProductIds, function () {
+    var cartProductId = $(this).val();
+    var cartRefreshBtn = $('#cartRefreshBtn' + cartProductId);
+    var cartProductAmount = $('#productAmount' + cartProductId);
+    var cateringId = $('#cateringId');
+    cartRefreshBtn.click(function () {
+      $.ajax({
+        type: 'POST',
+        url: '/catering/' + cateringId.val() + '/cartProduct/update/',
+        data: {
+          cartProductId: cartProductId,
+          cartProductAmount: cartProductAmount.val()
+        },
+        success: function success() {
+          location.reload();
+        }
+      });
+    });
+  });
+}
 
 function CheckOpenOrClosed() {
   console.log();

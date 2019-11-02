@@ -27,7 +27,13 @@ Route::post('/home', 'HomeController@searchCatering')->middleware('verified')->n
 Route::get('/catering/{id}/menu', 'HomeController@cateringMenu')->middleware('verified')->name('cateringMenu');
 Route::get('/catering/{id}/menu/{dayOfTheWeekId}', 'HomeController@cateringMenuDay')->middleware('verified')->name('cateringMenuDay');
 
+// Cart
+// Add to cart
 Route::get('/catering/{cateringId}/cartProduct/{cartProductId}/date/{date}', 'CartController@addProductToCart')->middleware('verified')->name('addProductToCart');
+// Remove from cart
+Route::post('/catering/{cateringId}/cartProduct/remove/', 'CartController@removeProductFromCart')->middleware('verified')->name('removeProductFromCart');
+// Update Product Amount In Cart
+Route::post('/catering/{cateringId}/cartProduct/update/', 'CartController@updateProductAmount')->middleware('verified')->name('updateProductAmount');
 
 
 

@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     Filters
-                    <h4 style="text-align:center; margin-top:25px">Comming Soon</h4>
+                    <h4 style="text-align:center; margin-top:25px">Coming Soon</h4>
                 </div>
             </div>
         </div>
