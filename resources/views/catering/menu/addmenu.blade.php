@@ -183,7 +183,7 @@
                             </td>
                             <td>
                                 <button class="btn btn-primary btm-btn addProduct"
-                                    onclick="window.location='/mycatering/{{$catering->id}}/product'">Add
+                                    onclick="window.location='/mycatering/{{$catering->id}}/menuId/{{$menuDate->id}}/product'">Add
                                     Product</button>
                             </td>
                             {{-- @endif

@@ -72,9 +72,11 @@ class CateringController extends Controller
     public function addProducts(Request $request)
     {
         $cateringId = $request->route('cateringId');
+        $menuId = $request->route('menuId');
         $products = Product::where('cateringId', $cateringId)->get();
 
-        return view('catering.product.addProduct', compact('cateringId', 'products'));
+        // var_dump($menuId);
+        return view('catering.product.addProduct', compact('cateringId', 'products', 'menuId'));
     }
 
     public function addProduct(Request $request)
