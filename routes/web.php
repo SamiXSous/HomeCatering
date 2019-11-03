@@ -73,9 +73,13 @@ Route::post('/catering/edit/{id}', 'CateringController@updateCatering')->middlew
 Route::post('/catering/edit/{id}/activeOrInactive', 'CateringController@activeOrInactiveCatering')->middleware('verified')->middleware('seller')->name('activeOrInactiveCatering');
 
 
-// Product
+// Add New Product
 Route::get('/mycatering/{cateringId}/menuId/{menuId}/product', 'CateringController@addProducts')->middleware('verified')->middleware('seller')->name('addProducts');
 Route::post('/mycatering/{cateringId}/product/', 'CateringController@addProduct')->middleware('verified')->middleware('seller')->name('addProduct');
+
+// Edit Existing Product
+Route::get('/mycatering/{cateringId}/menuId/{menuId}/product/{productId}', 'CateringController@editProducts')->middleware('verified')->middleware('seller')->name('editProducts');
+Route::post('/mycatering/{cateringId}/product/edit', 'CateringController@editProduct')->middleware('verified')->middleware('seller')->name('editProduct');
 
 // Add Product To Menu
 Route::get('/mycatering/{cateringId}/menu/{menuId}/product/{productId}/menuDateId/{menuDateId}', 'CateringController@addProductToMenu')->middleware('verified')->middleware('seller')->name('addProductToMenu');

@@ -100,7 +100,9 @@
                             <td>{{$productMenu->description}}</td>
                             <td>{{$productMenu->image}}</td>
                             <td>{{$productMenu->price}}</td>
-                            <td style="padding: 5px"><a class="btn btn-primary">Edit</a> </td>
+                            <td style="padding: 5px"><a
+                                    onclick="window.location='/mycatering/{{$catering->id}}/menuId/{{$menuDate->id}}/product/{{$productMenu->productId}}'"
+                                    class="btn btn-primary">Edit</a> </td>
                             <td style="padding: 5px">
                                 <form
                                     action="{{ route('removeProductFromMenu', ['cateringId' => $catering->id, 'menuId' => $menu->id, 'productId' => $productMenu->productId] ) }}"
@@ -150,7 +152,9 @@
                             <td>{{$product->image}} </td>
                             {{-- @endif --}}
                             <td>{{$product->price}}</td>
-                            <td style="padding: 5px"><a class="btn btn-primary">Edit</a> </td>
+                            <td style="padding: 5px"><a
+                                    onclick="window.location='/mycatering/{{$catering->id}}/menuId/{{$menuDate->id}}/product/{{$product->id}}'"
+                                    class="btn btn-primary">Edit</a> </td>
                             <td style="padding: 5px"><a
                                     onclick="window.location='/mycatering/{{$catering->id}}/menu/{{$menu->id}}/product/{{$product->id}}/menuDateId/{{$menuDate->id}}'"
                                     class="btn btn-primary" style="margin-left: 16px;">Add</a>

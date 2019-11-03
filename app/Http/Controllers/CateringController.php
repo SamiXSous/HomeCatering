@@ -78,17 +78,60 @@ class CateringController extends Controller
         // var_dump($menuId);
         return view('catering.product.addProduct', compact('cateringId', 'products', 'menuId'));
     }
+    
+    public function editProducts(Request $request)
+    {
+        $cateringId = $request->route('cateringId');
+        $menuId = $request->route('menuId');
+        $productId = $request->route('productId');
+        $product = Product::where(['id' =>$productId])->first();
 
-    public function addProduct(Request $request)
+        // var_dump($productId,$product);
+        return view('catering.product.editProduct', compact('cateringId', 'product', 'menuId'));
+    }
+
+    public function editProduct(Request $request)
     {
         $id = Auth::id();
         $menuDateId = $request->route('menuId');
         $cateringId = $request->route('cateringId');
+        $productId = $request->input('productId');
         $catering = Catering::find($cateringId);
         $menuDate = MenuDate::find($menuDateId);
         $menu = Menu::where('DayOfTheWeekId', $menuDateId)->where('CateringId', $cateringId)->first();
         // var_dump($menu);
 
+
+        if ($request->input()) {
+            if ($request->file('image') != null) {
+                $file = $request->file('image');
+                var_dump($file);
+                $extension = $file->getClientOriginalExtension();
+                $filename = time() . $catering->id . '.' . $extension;
+                $file->move('uploads/catering/', $filename);
+            } else {
+                $filename = null;
+            }
+
+            var_dump($productId);
+
+            Product::find($productId)->update(
+                [
+                    'name' => $request->input('name'),
+                    'description' => $request->input('description'),
+                    'price' => $request->input('price'),
+                    'image' => $filename,
+                    'cateringId' => $request->input('cateringId')
+                ]
+            );
+        }
+        return back();
+    }
+
+    public function addProduct(Request $request)
+    {
+        $cateringId = $request->route('cateringId');
+        $catering = Catering::find($cateringId);
 
         if ($request->input()) {
             if ($request->file('image') != null) {
@@ -111,7 +154,6 @@ class CateringController extends Controller
                 ]
             );
         }
-        $products = Product::where('cateringId', $cateringId)->get();
 
         return back();
     }
