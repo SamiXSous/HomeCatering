@@ -8,7 +8,7 @@ class Catering extends Model
 {
     //
     protected $fillable = [
-        'name', 'adminId', 'description',
+        'name', 'adminId', 'description', 'active',
     ];
 
     public function admin_id()

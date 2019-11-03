@@ -75,18 +75,17 @@
                     @if ($catering->active)
 
                     <input type="checkbox" class="custom-control-input" id="activeCatering" name="activeCatering"
-                        checked onchange="{{ route('activeOrInactiveCatering', ['id' => $catering->id]) }}">
+                        checked>
                     <label class="custom-control-label col-md-4 col-form-label text-md-right" for="activeCatering"
                         id="activeCateringLabel">Active</label>
 
 
                     @else
-                    <input type="checkbox" class="custom-control-input" id="activeCatering" name="activeCatering"
-                        onchange="console.log('Test')">
+                    <input type="checkbox" class="custom-control-input" id="activeCatering" name="activeCatering">
                     <label class="custom-control-label col-md-4 col-form-label text-md-right" for="activeCatering"
                         id="activeCateringLabel">Inactive</label>
                     @endif
-
+                    <input id="cateringId" type="hidden" name="cateringId" value="{{$catering->id}}">
 
                 </div>
 

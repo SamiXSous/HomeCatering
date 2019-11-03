@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\User;
-use App\Role;
 use App\Catering;
 use App\MenuDate;
 use App\Menu;
@@ -35,6 +33,48 @@ class CateringController extends Controller
         // var_dump($catering);
 
         return view('catering.editCatering', compact('catering'));
+    }
+
+    public function updateCatering(Request $request)
+    {
+        $user = Auth::user();
+        $catering = Catering::where('adminId', $user->id)->first();
+
+        // if ($request->input('role') == 1) {
+        //     Catering::firstOrCreate(['admin_id' => $id]);
+        // }
+        // var_dump($request->file('image'));
+        if ($request->file('image') != null) {
+            $file = $request->file('image');
+            var_dump($file);
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . $catering->id . '.' . $extension;
+            $file->move('uploads/catering/', $filename);
+            Catering::where('adminId', $user->id)
+                ->update([
+                    'image' => $filename
+                ]);
+        }
+
+
+        if ($request->input('activeCatering') == null) {
+            $active = false;
+        } else {
+            $active = true;
+        }
+        if ($user->role == 2) {
+
+            // var_dump($file);
+            Catering::where('adminId', $user->id)
+                ->update([
+                    'name' => $request->input('name'),
+                    'description' => $request->input('description'),
+                    'active' => $active,
+                    // 'image' => $filename
+                ]);
+        }
+
+        return redirect('/mycatering');
     }
 
     public function addMenus()
@@ -88,6 +128,27 @@ class CateringController extends Controller
 
         // var_dump($productId,$product);
         return view('catering.product.editProduct', compact('cateringId', 'product', 'menuId'));
+    }
+
+    public function updateActiveState(Request $request)
+    {
+        $cateringId = $request->input('cateringId');
+        $val = $request->input('active');
+
+        $catering = Catering::find($cateringId)->first();
+
+        if($catering->active == 0){
+            Catering::findOrFail($cateringId)->update(['active' => 1]);
+            $val = "Always True";
+        }else{
+            Catering::findOrFail($cateringId)->update(['active' => 0]);
+            $val = "Could it BE";
+        }
+
+        return response()->json(['success'=> $catering->active]);
+        
+
+        
     }
 
     public function editProduct(Request $request)
@@ -166,12 +227,6 @@ class CateringController extends Controller
         return back();
     }
 
-    public function activeOrInactiveCatering(Request $request){
-        var_dump($request);
-    }
-
-
-
     public function openOrClosedMenu(Request $request)
     {
         // var_dump($request->input('openOrClosed'));
@@ -201,46 +256,5 @@ class CateringController extends Controller
         // var_dump($menu);
 
         return view('catering.menu.addMenu', compact('catering', 'menuDate', 'menu', 'products', 'productsMenu'));
-    }
-
-    public function updateCatering(Request $request)
-    {
-        $user = Auth::user();
-        $id = Auth::id();
-        $catering = Catering::where('adminId', $id)->first();
-
-        // if ($request->input('role') == 1) {
-        //     Catering::firstOrCreate(['admin_id' => $id]);
-        // }
-        // var_dump($request->file('image'));
-        if ($request->file('image') != null) {
-            $file = $request->file('image');
-            var_dump($file);
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . $catering->id . '.' . $extension;
-            $file->move('uploads/catering/', $filename);
-        } else {
-            $filename = null;
-        }
-
-
-        if ($request->input('activeCatering') == null) {
-            $active = false;
-        } else {
-            $active = true;
-        }
-        if ($user->role == 2) {
-
-            // var_dump($file);
-            Catering::where('adminId', $user->id)
-                ->update([
-                    'name' => $request->input('name'),
-                    'description' => $request->input('description'),
-                    'active' => $active,
-                    'image' => $filename
-                ]);
-        }
-
-        return redirect('/mycatering');
     }
 }
